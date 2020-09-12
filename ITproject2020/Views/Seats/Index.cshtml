@@ -1,0 +1,52 @@
+﻿@model IEnumerable<ITproject2020.Models.Seat>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Performance.PerformanceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SeatNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Performance.PerformanceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SeatNumber)
+        </td>
+        <td>
+            @if (item.status == true)
+            {
+                <p>зафатено</p>
+            }
+            else
+            {
+                <p>слободно</p>
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SeatId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SeatId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SeatId })
+        </td>
+    </tr>
+}
+
+</table>

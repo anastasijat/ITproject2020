@@ -11,18 +11,23 @@ namespace ITproject2020.Models
         [Key]
         public int PerformanceId { get; set; }
         [Required]
+        [Display(Name = "Име")]
         public string PerformanceName { get; set; }
 
+        [Display(Name ="Опис")]
         public string Description { get; set; }
 
+        [Display(Name = "Место на одржување")]
         public int BuildingId { get; set; }
 
-
+        [Display(Name = "Место на одржување")]
         public Building Building { get; set; }
 
-
+        [Display(Name = "Цена")]
+        public int Price { get; set; }
+        [Display(Name = "Време на одржување")]
         public DateTime PerformanceDateTime { get; set; }
-
+        [Display(Name = "Слика")]
         public String ImageURL { get; set; }
 
         public virtual List<Seat> Seats { get; set; }

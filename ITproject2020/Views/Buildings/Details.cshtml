@@ -1,0 +1,62 @@
+﻿@model ITproject2020.Models.Building
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Building</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BuildingName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BuildingName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfSeats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfSeats)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BuildingAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BuildingAddress)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BuildingId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<h2> Листа од претстави </h2>
+<ul>
+    @foreach (ITproject2020.Models.Performance p in Model.Performances)
+    {
+        <li>
+            <a href="/Performances/Details/@p.PerformanceId">@p.PerformanceName</a>
+            <span>@p.PerformanceDateTime</span>
+        </li>
+
+
+    }
+</ul>

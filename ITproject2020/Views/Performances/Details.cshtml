@@ -1,0 +1,66 @@
+﻿@model ITproject2020.Models.Performance
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Performance</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Building.BuildingName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Building.BuildingName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PerformanceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PerformanceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PerformanceDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PerformanceDateTime)
+        </dd>
+
+        <dt>
+            <img src="@Model.ImageURL" style="max-width:200px" />
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageURL)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PerformanceId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

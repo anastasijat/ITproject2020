@@ -168,14 +168,26 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BuildingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PerformancesController.cs" />
+    <Compile Include="Controllers\ReservationsController.cs" />
+    <Compile Include="Controllers\SeatsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202009121518002_m1.cs" />
     <Compile Include="Migrations\202009121518002_m1.Designer.cs">
       <DependentUpon>202009121518002_m1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009121707116_m2.cs" />
+    <Compile Include="Migrations\202009121707116_m2.Designer.cs">
+      <DependentUpon>202009121707116_m2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009121805285_m3.cs" />
+    <Compile Include="Migrations\202009121805285_m3.Designer.cs">
+      <DependentUpon>202009121805285_m3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -186,6 +198,7 @@
     <Compile Include="Models\Performance.cs" />
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\Seat.cs" />
+    <Compile Include="Models\SeatListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -245,6 +258,26 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Buildings\Create.cshtml" />
+    <Content Include="Views\Buildings\Delete.cshtml" />
+    <Content Include="Views\Buildings\Details.cshtml" />
+    <Content Include="Views\Buildings\Edit.cshtml" />
+    <Content Include="Views\Buildings\Index.cshtml" />
+    <Content Include="Views\Performances\Create.cshtml" />
+    <Content Include="Views\Performances\Delete.cshtml" />
+    <Content Include="Views\Performances\Details.cshtml" />
+    <Content Include="Views\Performances\Edit.cshtml" />
+    <Content Include="Views\Performances\Index.cshtml" />
+    <Content Include="Views\Seats\Create.cshtml" />
+    <Content Include="Views\Seats\Delete.cshtml" />
+    <Content Include="Views\Seats\Details.cshtml" />
+    <Content Include="Views\Seats\Edit.cshtml" />
+    <Content Include="Views\Seats\Index.cshtml" />
+    <Content Include="Views\Reservations\Create.cshtml" />
+    <Content Include="Views\Reservations\Delete.cshtml" />
+    <Content Include="Views\Reservations\Details.cshtml" />
+    <Content Include="Views\Reservations\Edit.cshtml" />
+    <Content Include="Views\Reservations\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -265,6 +298,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202009121518002_m1.resx">
       <DependentUpon>202009121518002_m1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009121707116_m2.resx">
+      <DependentUpon>202009121707116_m2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009121805285_m3.resx">
+      <DependentUpon>202009121805285_m3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

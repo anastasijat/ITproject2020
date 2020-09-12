@@ -10,14 +10,17 @@ namespace ITproject2020.Models
     {
         [Key]
         public int ReservationId { get; set; }
-        public int ClientId { get; set; }
+        //public int ClientId { get; set; }
 
-        public Client Client { get; set; }
+        //public Client Client { get; set; }
 
+        public ApplicationUser User { get; set; }
+        //public nVarchar UserId { get; set; }
         public int SeatId { get; set; }
 
         public Seat Seat { get; set; }
 
+      
         public Reservation()
         {
 

@@ -14,7 +14,7 @@ namespace ITproject2020.Models
         public int SeatNumber { get; set; }
 
         public Boolean status { get; set; }
-        public int Price { get; set; }
+        
 
         public int PerformanceId { get; set; }
 
@@ -30,6 +30,7 @@ namespace ITproject2020.Models
             this.status = false;
             this.PerformanceId = PerformanceId;
             this.Performance = Performance;
+           
         }
     }
 }
