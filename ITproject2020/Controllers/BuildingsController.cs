@@ -86,6 +86,7 @@ namespace ITproject2020.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "BuildingId,BuildingName,Status,NumberOfSeats,BuildingAddress")] Building building)
         {
+            
             if (ModelState.IsValid)
             {
                 db.Entry(building).State = EntityState.Modified;

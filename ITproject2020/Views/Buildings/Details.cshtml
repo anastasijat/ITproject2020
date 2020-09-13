@@ -45,7 +45,10 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Промени", "Edit", new { id = Model.BuildingId }) |
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Промени", "Edit", new { id = Model.BuildingId })
+    }
     @Html.ActionLink("Назад", "Index")
 </p>
 <h2> Листа од претстави </h2>

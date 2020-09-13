@@ -12,6 +12,12 @@ namespace ITproject2020.Models
         public string PhoneNumber { get; set; }
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
+        [Display(Name = "Име на корисник")]
+        public string Name { get; set; }
+        [Display(Name = "Презиме на корисник")]
+        public string Surname { get; set; }
+        [Display(Name = "Адреса на живеење")]
+        public string UserHomeAddress { get; set; }
     }
 
     public class ManageLoginsViewModel

@@ -43,7 +43,7 @@
                     @Html.DisplayFor(modelItem => item.PerformanceDateTime)
                 </td>
                 <td>
-                    <img src="@item.ImageURL" style="max-width:200px" />
+                    <img src="@item.ImageURL" style="max-width:120px" />
                 </td>
                 <td>
                     @if (User.IsInRole("Admin"))
@@ -51,14 +51,13 @@
                         @Html.ActionLink("Промени", "Edit", new { id = item.PerformanceId })
 
                         <a class="btn-link js-delete" data-id="@item.PerformanceId">Избриши</a>
-                        @Html.ActionLink("Седишта", "Index", "Seats",new { id = item.PerformanceId },null)
+                        
 
                     }
                     @Html.ActionLink("Детали", "Details", new { id = item.PerformanceId })
-                    @if (User.IsInRole("User"))
-                    {
-                        @Html.ActionLink("Резервирај", "Create", "Reservations", new { id = item.PerformanceId }, null)
-                    }
+                    
+                    @Html.ActionLink("Резервирај", "Create", "Reservations", new { id = item.PerformanceId }, null)
+                    
                 </td>
             </tr>
         }

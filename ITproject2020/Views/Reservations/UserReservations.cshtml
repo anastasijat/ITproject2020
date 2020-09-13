@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ITproject2020.Models.Reservation>
+@{
+    ViewBag.Title = "SuccessfulReservation";
+}
+
+<h2>Мои резервации</h2>
+<div class="form-actions no-color">
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Seat.SeatNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seat.Performance.PerformanceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seat.Performance.PerformanceDateTime)
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seat.SeatNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seat.Performance.PerformanceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seat.Performance.PerformanceDateTime)
+                </td>
+                <td>
+                    @Html.ActionLink("Избриши", "Delete","Reservations", new { id = item.ReservationId },null)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+        @Html.ActionLink("Назад кон листа претстави", "Index", "Performances")
+</div>

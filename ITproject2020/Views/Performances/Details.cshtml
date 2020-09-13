@@ -51,7 +51,7 @@
         </dd>
 
         <dt>
-            Слика
+            
         </dt>
 
         <dd>
@@ -61,6 +61,9 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Промени", "Edit", new { id = Model.PerformanceId }) |
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Промени", "Edit", new { id = Model.PerformanceId }) 
+    }
     @Html.ActionLink("Назад", "Index")
 </p>

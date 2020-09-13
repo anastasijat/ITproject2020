@@ -4,34 +4,45 @@
     ViewBag.Title = "Create";
 }
 
-
-<h3>Име на претстава: @Model.Performance.PerformanceName</h3>
-<h3>Датум на одржување: @Model.Performance.PerformanceDateTime</h3>
-<h3>Место на одржување: @Model.Performance.Building.BuildingName</h3>
+<br />
+<br />
+<h4 class="text-center"><b>Име на претстава: </b>@Model.Performance.PerformanceName</h4>
+<br />
+<h4 class="text-center"><b>Датум на одржување: </b>@Model.Performance.PerformanceDateTime</h4>
+<h4 class="text-center"><b>Место на одржување: </b>@Model.Performance.Building.BuildingName</h4>
 @using (Html.BeginForm("Create", "Reservations", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    <div>
 
+    {
+<div class="form-horizontal">
+    <div class="form-group">
         @foreach (var item in Model.availableSeats)
         {
-            <div>
+
+            <div class="col-md-10">
                 <label>
-                    <input type="checkbox" name="selectedSeats" value="@item.SeatId" />@item.SeatNumber  
+                    <input type="checkbox" name="selectedSeats" value="@item.SeatId" />@item.SeatNumber
                 </label>
             </div>
-        }
+        
+
+    }
+        </div>
+    </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input name="btn" type="submit" value="Резервирај" class="btn btn-default" />
             </div>
         </div>
-    </div>
-}
-<div>
-    @Html.ActionLink("Назад", "Index")
-</div>
+        <div>
+            @Html.ActionLink("Назад", "Index")
+        </div>
+    }
 
+
+}         
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

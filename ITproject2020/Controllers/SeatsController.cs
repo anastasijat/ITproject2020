@@ -14,25 +14,14 @@ namespace ITproject2020.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        
+
         // GET: Seats
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
-
-            if (id != null)
-            {
-                var seats = db.Seats.Include(s => s.Performance).Where(s => s.PerformanceId == id);
-                return View(seats.ToList());
-            }
-            else
-
-            {
-                var seats = db.Seats.Include(s => s.Performance);
-
-                return View(seats.ToList());
-            }
+            var seats = db.Seats.Include(s => s.Performance);
+            return View(seats.ToList());
         }
-        
+
 
         /*// GET: Seats/Delete/5
         public ActionResult Delete(int? id)

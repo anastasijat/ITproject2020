@@ -24,6 +24,10 @@
                     <li>@Html.ActionLink("Почетна", "Index", "Home")</li>
                     <li>@Html.ActionLink("Објекти", "Index", "Buildings")</li>
                     <li>@Html.ActionLink("Изведби", "Index", "Performances")</li>
+                    @if (User.IsInRole("User"))
+                    {
+                        <li>@Html.ActionLink("Мои резервации", "UserReservations", "Reservations")</li>
+                    }
                     @if (User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Резервации", "Index", "Reservations")</li>

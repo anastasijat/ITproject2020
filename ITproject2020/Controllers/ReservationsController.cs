@@ -23,7 +23,7 @@ namespace ITproject2020.Controllers
         }
 
         // GET: Reservations/Create
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User,Admin")]
         public ActionResult Create(int? id)
         {
             if (id == null)
@@ -48,13 +48,13 @@ namespace ITproject2020.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User,Admin")]
         public ActionResult Create(SeatListModel model)
         {
             if (ModelState.IsValid)
             {
-                
-                
+
+                var nowSelected = new List<Reservation>();
                 IList<int> seats = model.selectedSeats;
                 var userId = User.Identity.GetUserId();
                
@@ -66,26 +66,33 @@ namespace ITproject2020.Controllers
                     s.status = true;
                     reservation.Seat = db.Seats.Find(seats[i]);
                     reservation.User = db.Users.Find(userId);
+
+                    nowSelected.Add(reservation);
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
                 }
 
                
-               
-
+       
                 return RedirectToAction("SuccessfulReservation");
             }
             return RedirectToAction("Index");
         }
-
         public ActionResult SuccessfulReservation()
         {
             return View();
         }
 
+        public ActionResult UserReservations()
+        {
+            var userId = User.Identity.GetUserId();
+            var reservations = db.Reservations.Include(u=>u.Seat).Include(u=>u.Seat.Performance).Where(u => u.User.Id == userId).ToList();
+            return View(reservations);
+        }
+
         
         // GET: Reservations/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User,Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -93,7 +100,7 @@ namespace ITproject2020.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //Reservation reservation = db.Reservations.Find(id);
-            var reservation = db.Reservations.Include(s => s.Seat).Where(s => s.ReservationId == id).Single();
+            var reservation = db.Reservations.Include(s => s.Seat).Include(s=>s.Seat.Performance).Where(s => s.ReservationId == id).Single();
             if (reservation == null)
             {
                 return HttpNotFound();
@@ -104,13 +111,14 @@ namespace ITproject2020.Controllers
         // POST: Reservations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User,Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Reservation reservation = db.Reservations.Find(id);
             db.Seats.Find(reservation.SeatId).status = false;
             db.Reservations.Remove(reservation);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("UserReservations");
         }
         protected override void Dispose(bool disposing)
         {
