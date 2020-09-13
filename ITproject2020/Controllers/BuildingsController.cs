@@ -15,12 +15,14 @@ namespace ITproject2020.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Buildings
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View(db.Buildings.ToList());
         }
 
         // GET: Buildings/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace ITproject2020.Controllers
         }
 
         // GET: Buildings/Create
+        [Authorize(Roles ="Admin")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +49,7 @@ namespace ITproject2020.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "BuildingId,BuildingName,Status,NumberOfSeats,BuildingAddress")] Building building)
         {
             if (ModelState.IsValid)
@@ -59,6 +63,7 @@ namespace ITproject2020.Controllers
         }
 
         // GET: Buildings/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +83,7 @@ namespace ITproject2020.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "BuildingId,BuildingName,Status,NumberOfSeats,BuildingAddress")] Building building)
         {
             if (ModelState.IsValid)
@@ -90,6 +96,7 @@ namespace ITproject2020.Controllers
         }
 
         // GET: Buildings/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -107,6 +114,7 @@ namespace ITproject2020.Controllers
         // POST: Buildings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Building building = db.Buildings.Find(id);

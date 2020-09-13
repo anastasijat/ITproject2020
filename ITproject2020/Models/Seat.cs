@@ -13,6 +13,7 @@ namespace ITproject2020.Models
         [Required]
         public int SeatNumber { get; set; }
 
+        [Required]
         public Boolean status { get; set; }
         
 

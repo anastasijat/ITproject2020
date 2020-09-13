@@ -75,9 +75,11 @@ namespace ITproject2020.Controllers
                     var s = db.Seats.Find(seats[i]);
                     s.status = true;
                     reservation.Seat = db.Seats.Find(seats[i]);
-                    reservation.User = db.Users.Find("9721c8aa - 351d - 47b9 - b3b0 - bf4cc5824d4d");
+                    //reservation.User = db.Users.Find("9721c8aa - 351d - 47b9 - b3b0 - bf4cc5824d4d");
                     // reservation.Client = db.Clients.Find(3);
-                    
+                    var userId = User.Identity.GetUserId();
+                    reservation.User = db.Users.Find(userId);
+                  
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
                 }
@@ -141,7 +143,8 @@ namespace ITproject2020.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Reservation reservation = db.Reservations.Find(id);
+            //Reservation reservation = db.Reservations.Find(id);
+            var reservation = db.Reservations.Include(s => s.Seat).Where(s => s.ReservationId == id).Single();
             if (reservation == null)
             {
                 return HttpNotFound();
@@ -155,6 +158,7 @@ namespace ITproject2020.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Reservation reservation = db.Reservations.Find(id);
+            db.Seats.Find(reservation.SeatId).status = false;
             db.Reservations.Remove(reservation);
             db.SaveChanges();
             return RedirectToAction("Index");

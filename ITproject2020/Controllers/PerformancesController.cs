@@ -15,6 +15,7 @@ namespace ITproject2020.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Performances
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var performances = db.Performances.Include(p => p.Building);
@@ -22,6 +23,7 @@ namespace ITproject2020.Controllers
         }
 
         // GET: Performances/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,6 +40,7 @@ namespace ITproject2020.Controllers
         }
 
         // GET: Performances/Create
+        [Authorize(Roles ="Admin")]
         public ActionResult Create()
         {
             ViewBag.BuildingId = new SelectList(db.Buildings, "BuildingId", "BuildingName");
@@ -49,6 +52,7 @@ namespace ITproject2020.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "PerformanceId,PerformanceName,Description,BuildingId,Price,PerformanceDateTime,ImageURL")] Performance performance)
         {
             if (ModelState.IsValid)
@@ -82,6 +86,7 @@ namespace ITproject2020.Controllers
         }
 
         // GET: Performances/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -102,6 +107,7 @@ namespace ITproject2020.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "PerformanceId,PerformanceName,Description,BuildingId,Price,PerformanceDateTime,ImageURL")] Performance performance)
         {
             if (ModelState.IsValid)
@@ -115,6 +121,7 @@ namespace ITproject2020.Controllers
         }
 
         // GET: Performances/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -132,6 +139,7 @@ namespace ITproject2020.Controllers
         // POST: Performances/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Performance performance = db.Performances.Find(id);

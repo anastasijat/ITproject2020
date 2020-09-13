@@ -15,9 +15,10 @@ namespace ITproject2020.Models
         //public Client Client { get; set; }
 
         public ApplicationUser User { get; set; }
-        //public nVarchar UserId { get; set; }
-        public int SeatId { get; set; }
 
+        [Required]
+        public int SeatId { get; set; }
+        [Required]
         public Seat Seat { get; set; }
 
       

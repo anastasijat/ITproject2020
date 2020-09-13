@@ -4,10 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Детали</h2>
 
 <div>
-    <h4>Performance</h4>
+    <h4>Изведба</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -51,16 +51,16 @@
         </dd>
 
         <dt>
-            <img src="@Model.ImageURL" style="max-width:200px" />
+            Слика
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ImageURL)
+            <img src="@Model.ImageURL" style="max-width:200px" />
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PerformanceId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Промени", "Edit", new { id = Model.PerformanceId }) |
+    @Html.ActionLink("Назад", "Index")
 </p>

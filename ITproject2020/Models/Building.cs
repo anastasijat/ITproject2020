@@ -9,10 +9,11 @@ namespace ITproject2020.Models
     public class Building
     {
         [Key]
+        [Display(Name = "Објект")]
         public int BuildingId { get; set; }
 
         [Required]
-        [Display(Name ="Објект")]
+        [Display(Name ="Име")]
         public string BuildingName { get; set; }
 
         [Display(Name = "Тип")]

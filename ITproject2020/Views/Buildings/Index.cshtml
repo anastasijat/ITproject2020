@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Листа на објекти</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Креирај нов објект", "Create")
 </p>
 <table class="table">
     <tr>
@@ -41,9 +41,14 @@
             @Html.DisplayFor(modelItem => item.BuildingAddress)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BuildingId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BuildingId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.BuildingId })
+            @Html.ActionLink("Детали", "Details", new { id = item.BuildingId }) 
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Промени", "Edit", new { id = item.BuildingId }) 
+                
+                @Html.ActionLink("Избриши", "Delete", new { id = item.BuildingId })
+            }
+
         </td>
     </tr>
 }
