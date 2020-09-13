@@ -120,6 +120,7 @@ namespace ITproject2020.Controllers
             return View(performance);
         }
 
+        /*
         // GET: Performances/Delete/5
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
@@ -149,7 +150,7 @@ namespace ITproject2020.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        */
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -11,63 +11,110 @@
         @Html.ActionLink("Креирај нова изведба", "Create")
     </p>
 }
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Building.BuildingName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PerformanceName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PerformanceDateTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ImageURL)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+<table id="performancesTable" class="table">
+    <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Building.BuildingName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PerformanceName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PerformanceDateTime)
-            </td>
-            <td>
-                <img src="@item.ImageURL" style="max-width:200px" />
-            </td>
-            <td>
-                @if (User.IsInRole("Admin"))
-                {
-                    @Html.ActionLink("Промени", "Edit", new { id = item.PerformanceId })
-                    @Html.ActionLink("Избриши", "Delete", new { id = item.PerformanceId })
-                }
-                @Html.ActionLink("Детали", "Details", new { id = item.PerformanceId })
-                @if (User.IsInRole("User"))
-                {
-                    @Html.ActionLink("Резервирај", "Create", "Reservations", new { id = item.PerformanceId }, null)
-                }
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Building.BuildingName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PerformanceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PerformanceDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageURL)
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Building.BuildingName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PerformanceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PerformanceDateTime)
+                </td>
+                <td>
+                    <img src="@item.ImageURL" style="max-width:200px" />
+                </td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Промени", "Edit", new { id = item.PerformanceId })
 
+                        <a class="btn-link js-delete" data-id="@item.PerformanceId">Избриши</a>
+                    }
+                    @Html.ActionLink("Детали", "Details", new { id = item.PerformanceId })
+                    @if (User.IsInRole("User"))
+                    {
+                        @Html.ActionLink("Резервирај", "Create", "Reservations", new { id = item.PerformanceId }, null)
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var table = $('#performancesTable').DataTable({
+                "language": {
+                    "sProcessing": "Процесирање...",
+                    "sLengthMenu": "Прикажи _MENU_ записи",
+                    "sZeroRecords": "Не се пронајдени записи",
+                    "sEmptyTable": "Нема податоци во табелата",
+                    "sLoadingRecords": "Вчитување...",
+                    "sInfo": "Прикажани _START_ до _END_ од _TOTAL_ записи",
+                    "sInfoEmpty": "Прикажани 0 до 0 од 0 записи",
+                    "sInfoFiltered": "(филтрирано од вкупно _MAX_ записи)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Барај",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Почетна",
+                        "sPrevious": "Претходна",
+                        "sNext": "Следна",
+                        "sLast": "Последна"
+                    }
+                }
+            });
+            $("#performancesTable .js-delete").click(function () {
+                var button = $(this);
+                bootbox.confirm("Дали сте сигурни дека сакате да ја избришете оваа изведба?",
+                    function (result) {
+                        if (result) {
+                            $.ajax({
+                                method: "DELETE",
+                                url: "/api/PerformancesApi/" + button.attr("data-id"),
+                                success: function () {
+                                    table.row(button.parents("tr")).remove().draw();
+                                }
+                            })
+                        }
+                    })
+
+
+            })
+        });
+    </script>
+}

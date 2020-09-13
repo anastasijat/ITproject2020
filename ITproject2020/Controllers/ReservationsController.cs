@@ -52,7 +52,7 @@ namespace ITproject2020.Controllers
             var performance = db.Performances.Include(p => p.Seats).Include(p => p.Building).Where(p => p.PerformanceId == id).Single();
             SeatListModel model = new SeatListModel();
             model.Performance = performance;
-            model.availableSeats = performance.Seats;
+            model.availableSeats = performance.Seats.Where(s=>s.status==false).ToList();
             if (performance == null)
             {
                 return HttpNotFound();
@@ -72,7 +72,10 @@ namespace ITproject2020.Controllers
             if (ModelState.IsValid)
             {
                 //var seats = string.Join(",", model.selectedSeats);
+                
                 IList<int> seats = model.selectedSeats;
+                var userId = User.Identity.GetUserId();
+               
                 for (int i = 0; i < seats.Count; i++)
                 {
                     Reservation reservation = new Reservation();
@@ -82,14 +85,15 @@ namespace ITproject2020.Controllers
                     reservation.Seat = db.Seats.Find(seats[i]);
                     //reservation.User = db.Users.Find("9721c8aa - 351d - 47b9 - b3b0 - bf4cc5824d4d");
                     // reservation.Client = db.Clients.Find(3);
-                    var userId = User.Identity.GetUserId();
+
+
                     reservation.User = db.Users.Find(userId);
-                  
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
                 }
 
-
+               
+               
 
                 return RedirectToAction("Index");
             }
@@ -168,6 +172,14 @@ namespace ITproject2020.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        /*public ActionResult ShowUserReservations()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            var reservations = db.Reservations.Where(r => r.User==user).ToList();
+            return View(reservations);
+        }*/
 
         protected override void Dispose(bool disposing)
         {

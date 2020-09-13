@@ -52,7 +52,8 @@
                     {
                         @Html.ActionLink("Промени", "Edit", new { id = item.BuildingId })
 
-                        @Html.ActionLink("Избриши", "Delete", new { id = item.BuildingId })
+                      
+                       <a class="btn-link js-delete" data-id="@item.BuildingId">Избриши</a>
                     }
 
                 </td>
@@ -62,6 +63,50 @@
 </table>
 @section scripts{
     <script>
-        $("#buildingsTable").DataTable();
+        $(document).ready(function () {
+            var table= $('#buildingsTable').DataTable({
+                "language": {
+                    "sProcessing": "Процесирање...",
+                    "sLengthMenu": "Прикажи _MENU_ записи",
+                    "sZeroRecords": "Не се пронајдени записи",
+                    "sEmptyTable": "Нема податоци во табелата",
+                    "sLoadingRecords": "Вчитување...",
+                    "sInfo": "Прикажани _START_ до _END_ од _TOTAL_ записи",
+                    "sInfoEmpty": "Прикажани 0 до 0 од 0 записи",
+                    "sInfoFiltered": "(филтрирано од вкупно _MAX_ записи)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Барај",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Почетна",
+                        "sPrevious": "Претходна",
+                        "sNext": "Следна",
+                        "sLast": "Последна"
+                    }
+                }
+            });
+           
+            $("#buildingsTable .js-delete").click(function () {
+                var button = $(this);
+                bootbox.confirm("Дали сте сигурни дека сакате да го избришете овој објект?",
+                    function (result) {
+                        if (result) {
+                            $.ajax({
+                                method: "DELETE",
+                                url: "/api/BuildingsApi/" + button.attr("data-id"),
+                                success: function () {
+                                    table.row(button.parents("tr")).remove().draw();
+                                }
+                            })
+                        }
+                    })
+
+
+            })
+
+           
+
+        });
     </script>
-    }
+    
+}
