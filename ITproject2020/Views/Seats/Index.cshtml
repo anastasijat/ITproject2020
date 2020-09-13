@@ -4,49 +4,101 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Листа на седишта</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Performance.PerformanceName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SeatNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.status)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Performance.PerformanceName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SeatNumber)
-        </td>
-        <td>
-            @if (item.status == true)
-            {
-                <p>зафатено</p>
-            }
-            else
-            {
-                <p>слободно</p>
-            }
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SeatId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SeatId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SeatId })
-        </td>
-    </tr>
-}
+<table id="SeatsTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Performance.PerformanceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SeatNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Performance.PerformanceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SeatNumber)
+                </td>
+                <td>
+                    @if (item.status == true)
+                    {
+                        <p>зафатено</p>
+                    }
+                    else
+                    {
+                        <p>слободно</p>
+                    }
+                </td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn-link js-delete" data-id="@item.SeatId">Избриши</a>
+                    }
 
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var table = $('#SeatsTable').DataTable({
+                "language": {
+                    "sProcessing": "Процесирање...",
+                    "sLengthMenu": "Прикажи _MENU_ записи",
+                    "sZeroRecords": "Не се пронајдени записи",
+                    "sEmptyTable": "Нема податоци во табелата",
+                    "sLoadingRecords": "Вчитување...",
+                    "sInfo": "Прикажани _START_ до _END_ од _TOTAL_ записи",
+                    "sInfoEmpty": "Прикажани 0 до 0 од 0 записи",
+                    "sInfoFiltered": "(филтрирано од вкупно _MAX_ записи)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Барај",
+                    "sUrl": "",
+                    "oPaginate": {
+                        "sFirst": "Почетна",
+                        "sPrevious": "Претходна",
+                        "sNext": "Следна",
+                        "sLast": "Последна"
+                    }
+                }
+            });
+
+            $("#SeatsTable .js-delete").click(function () {
+                var button = $(this);
+                bootbox.confirm("Дали сте сигурни дека сакате да го избришете ова седиште?",
+                    function (result) {
+                        if (result) {
+                            $.ajax({
+                                method: "DELETE",
+                                url: "/api/SeatsApi/" + button.attr("data-id"),
+                                success: function () {
+                                    table.row(button.parents("tr")).remove().draw();
+                                }
+                            })
+                        }
+                    })
+
+
+            })
+
+
+
+        });
+    </script>
+
+}

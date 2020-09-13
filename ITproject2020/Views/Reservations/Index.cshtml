@@ -4,35 +4,44 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Листа на резервации</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Seat.SeatId)
+            @Html.DisplayNameFor(model => model.Seat.SeatNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Seat.Performance.PerformanceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Seat.Performance.PerformanceDateTime)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.User.UserName)
         </th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Seat.SeatId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.UserName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ReservationId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ReservationId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ReservationId })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Seat.SeatNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Seat.Performance.PerformanceName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Seat.Performance.PerformanceDateTime)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.User.UserName)
+    </td>
+    <td>
+       
+        @Html.ActionLink("Избриши", "Delete", new { id = item.ReservationId })
+    </td>
+</tr>
 }
 
 </table>

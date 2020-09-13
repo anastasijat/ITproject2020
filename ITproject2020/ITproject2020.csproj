@@ -185,6 +185,7 @@
     <Compile Include="Controllers\PerformancesApiController.cs" />
     <Compile Include="Controllers\PerformancesController.cs" />
     <Compile Include="Controllers\ReservationsController.cs" />
+    <Compile Include="Controllers\SeatsApiController.cs" />
     <Compile Include="Controllers\SeatsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -205,10 +206,13 @@
     <Compile Include="Migrations\202009122311291_m4.Designer.cs">
       <DependentUpon>202009122311291_m4.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009131703537_m5.cs" />
+    <Compile Include="Migrations\202009131703537_m5.Designer.cs">
+      <DependentUpon>202009131703537_m5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Building.cs" />
-    <Compile Include="Models\Client.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Performance.cs" />
@@ -533,7 +537,7 @@
     <Content Include="Views\Reservations\Details.cshtml" />
     <Content Include="Views\Reservations\Edit.cshtml" />
     <Content Include="Views\Reservations\Index.cshtml" />
-    <Content Include="Views\Reservations\ShowUserReservations.cshtml" />
+    <Content Include="Views\Reservations\SuccessfulReservation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -563,6 +567,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009122311291_m4.resx">
       <DependentUpon>202009122311291_m4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009131703537_m5.resx">
+      <DependentUpon>202009131703537_m5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

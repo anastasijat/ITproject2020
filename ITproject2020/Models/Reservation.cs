@@ -10,10 +10,7 @@ namespace ITproject2020.Models
     {
         [Key]
         public int ReservationId { get; set; }
-        //public int ClientId { get; set; }
-
-        //public Client Client { get; set; }
-
+        
         [Display(Name = "Корисник")]
         public ApplicationUser User { get; set; }
 

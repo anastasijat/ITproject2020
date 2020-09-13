@@ -21,12 +21,6 @@
                 @Html.DisplayNameFor(model => model.PerformanceName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.PerformanceDateTime)
             </th>
             <th>
@@ -46,12 +40,6 @@
                     @Html.DisplayFor(modelItem => item.PerformanceName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.PerformanceDateTime)
                 </td>
                 <td>
@@ -63,6 +51,8 @@
                         @Html.ActionLink("Промени", "Edit", new { id = item.PerformanceId })
 
                         <a class="btn-link js-delete" data-id="@item.PerformanceId">Избриши</a>
+                        @Html.ActionLink("Седишта", "Index", "Seats",new { id = item.PerformanceId },null)
+
                     }
                     @Html.ActionLink("Детали", "Details", new { id = item.PerformanceId })
                     @if (User.IsInRole("User"))

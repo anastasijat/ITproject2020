@@ -15,7 +15,7 @@
 
         @foreach (var item in Model.availableSeats)
         {
-            <div class="checkbox">
+            <div>
                 <label>
                     <input type="checkbox" name="selectedSeats" value="@item.SeatId" />@item.SeatNumber  
                 </label>
@@ -29,7 +29,7 @@
     </div>
 }
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Назад", "Index")
 </div>
 
 @section Scripts {

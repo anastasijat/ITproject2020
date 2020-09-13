@@ -14,30 +14,12 @@ namespace ITproject2020.Controllers
     public class ReservationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin")]
         // GET: Reservations
         public ActionResult Index()
         {
-            var reservations = db.Reservations.Include(u => u.User).Include(u=>u.Seat).ToList();
-           // var reservations = db.Reservations.Include(r => r.Seat);
+            var reservations = db.Reservations.Include(u => u.User).Include(u=>u.Seat.Performance).ToList();
             return View(reservations.ToList());
-        }
-
-        // GET: Reservations/Details/5
-        [Authorize(Roles = "User")]
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            //Reservation reservation = db.Reservations.Find(id);
-            var reservation = db.Reservations.Include(u => u.User).Where(u => u.ReservationId == id).Single();
-            if (reservation == null)
-            {
-                return HttpNotFound();
-            }
-            return View(reservation);
         }
 
         // GET: Reservations/Create
@@ -71,7 +53,7 @@ namespace ITproject2020.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var seats = string.Join(",", model.selectedSeats);
+                
                 
                 IList<int> seats = model.selectedSeats;
                 var userId = User.Identity.GetUserId();
@@ -83,10 +65,6 @@ namespace ITproject2020.Controllers
                     var s = db.Seats.Find(seats[i]);
                     s.status = true;
                     reservation.Seat = db.Seats.Find(seats[i]);
-                    //reservation.User = db.Users.Find("9721c8aa - 351d - 47b9 - b3b0 - bf4cc5824d4d");
-                    // reservation.Client = db.Clients.Find(3);
-
-
                     reservation.User = db.Users.Find(userId);
                     db.Reservations.Add(reservation);
                     db.SaveChanges();
@@ -95,57 +73,19 @@ namespace ITproject2020.Controllers
                
                
 
-                return RedirectToAction("Index");
+                return RedirectToAction("SuccessfulReservation");
             }
             return RedirectToAction("Index");
         }
-            /*public ActionResult Create([Bind(Include = "ReservationId,SeatId")] Reservation reservation)
-            {
-                if (ModelState.IsValid)
-                {
-                    db.Reservations.Add(reservation);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
 
-                ViewBag.SeatId = new SelectList(db.Seats, "SeatId", "SeatId", reservation.SeatId);
-                return View(reservation);
-            }
-            */
-            // GET: Reservations/Edit/5
-            public ActionResult Edit(int? id)
+        public ActionResult SuccessfulReservation()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Reservation reservation = db.Reservations.Find(id);
-            if (reservation == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.SeatId = new SelectList(db.Seats, "SeatId", "SeatId", reservation.SeatId);
-            return View(reservation);
+            return View();
         }
 
-        // POST: Reservations/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ReservationId,SeatId")] Reservation reservation)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(reservation).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.SeatId = new SelectList(db.Seats, "SeatId", "SeatId", reservation.SeatId);
-            return View(reservation);
-        }
-
+        
         // GET: Reservations/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -172,15 +112,6 @@ namespace ITproject2020.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        /*public ActionResult ShowUserReservations()
-        {
-            var userId = User.Identity.GetUserId();
-            var user = db.Users.Find(userId);
-            var reservations = db.Reservations.Where(r => r.User==user).ToList();
-            return View(reservations);
-        }*/
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
