@@ -11,14 +11,16 @@ namespace ITproject2020.Models
         [Key]
         public int SeatId { get; set; }
         [Required]
+        [Display(Name = "Број на седиште")]
         public int SeatNumber { get; set; }
 
         [Required]
+        [Display(Name = "Статус")]
         public Boolean status { get; set; }
+
         
-
         public int PerformanceId { get; set; }
-
+        [Display(Name = "Изведба")]
         public Performance Performance { get; set; }
 
         public Seat()

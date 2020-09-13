@@ -5,52 +5,63 @@
 }
 
 <h2>Листа на објекти</h2>
-
-<p>
-    @Html.ActionLink("Креирај нов објект", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.BuildingName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NumberOfSeats)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BuildingAddress)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BuildingName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.NumberOfSeats)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BuildingAddress)
-        </td>
-        <td>
-            @Html.ActionLink("Детали", "Details", new { id = item.BuildingId }) 
-            @if (User.IsInRole("Admin"))
-            {
-                @Html.ActionLink("Промени", "Edit", new { id = item.BuildingId }) 
-                
-                @Html.ActionLink("Избриши", "Delete", new { id = item.BuildingId })
-            }
-
-        </td>
-    </tr>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Креирај нов објект", "Create")
+    </p>
 }
 
+<table id="buildingsTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BuildingName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfSeats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BuildingAddress)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BuildingName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfSeats)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BuildingAddress)
+                </td>
+                <td>
+                    @Html.ActionLink("Детали", "Details", new { id = item.BuildingId })
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Промени", "Edit", new { id = item.BuildingId })
+
+                        @Html.ActionLink("Избриши", "Delete", new { id = item.BuildingId })
+                    }
+
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+@section scripts{
+    <script>
+        $("#buildingsTable").DataTable();
+    </script>
+    }

@@ -128,7 +128,8 @@ namespace ITproject2020.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Performance performance = db.Performances.Find(id);
+            var performance = db.Performances.Include(p => p.Building).Where(p => p.PerformanceId == id).Single();
+            //Performance performance = db.Performances.Find(id);
             if (performance == null)
             {
                 return HttpNotFound();
@@ -143,6 +144,7 @@ namespace ITproject2020.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Performance performance = db.Performances.Find(id);
+            
             db.Performances.Remove(performance);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -14,22 +14,25 @@ namespace ITproject2020.Controllers
     public class ReservationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        [Authorize(Roles = "User")]
         // GET: Reservations
         public ActionResult Index()
         {
-            var reservations = db.Reservations.Include(r => r.Seat);
+            var reservations = db.Reservations.Include(u => u.User).Include(u=>u.Seat).ToList();
+           // var reservations = db.Reservations.Include(r => r.Seat);
             return View(reservations.ToList());
         }
 
         // GET: Reservations/Details/5
+        [Authorize(Roles = "User")]
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Reservation reservation = db.Reservations.Find(id);
+            //Reservation reservation = db.Reservations.Find(id);
+            var reservation = db.Reservations.Include(u => u.User).Where(u => u.ReservationId == id).Single();
             if (reservation == null)
             {
                 return HttpNotFound();
@@ -38,6 +41,7 @@ namespace ITproject2020.Controllers
         }
 
         // GET: Reservations/Create
+        [Authorize(Roles = "User")]
         public ActionResult Create(int? id)
         {
             if (id == null)
@@ -62,6 +66,7 @@ namespace ITproject2020.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User")]
         public ActionResult Create(SeatListModel model)
         {
             if (ModelState.IsValid)

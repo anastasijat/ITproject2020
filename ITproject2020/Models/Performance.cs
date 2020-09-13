@@ -11,7 +11,7 @@ namespace ITproject2020.Models
         [Key]
         public int PerformanceId { get; set; }
         [Required]
-        [Display(Name = "Име")]
+        [Display(Name = "Изведба")]
         public string PerformanceName { get; set; }
 
         [Display(Name ="Опис")]
@@ -25,7 +25,7 @@ namespace ITproject2020.Models
 
         [Display(Name = "Цена")]
         public int Price { get; set; }
-        [Display(Name = "Време на одржување")]
+        [Display(Name = "Датум и време на одржување")]
         public DateTime PerformanceDateTime { get; set; }
         [Display(Name = "Слика")]
         public String ImageURL { get; set; }

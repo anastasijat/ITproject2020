@@ -14,11 +14,13 @@ namespace ITproject2020.Models
 
         //public Client Client { get; set; }
 
+        [Display(Name = "Корисник")]
         public ApplicationUser User { get; set; }
 
         [Required]
         public int SeatId { get; set; }
         [Required]
+        [Display(Name = "Број на седиште")]
         public Seat Seat { get; set; }
 
       
